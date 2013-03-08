@@ -1,0 +1,46 @@
+<script language="JavaScript" type="text/javascript" src="js/jquery.js"></script>
+<script language="javascript" type="text/javascript" src="js/excanvas.js"></script>
+<script language="JavaScript" type="text/javascript" src="js/jquery.flot.js"></script>
+<script language="JavaScript" type="text/javascript" src="js/live.js"></script>
+
+<script language="JavaScript" type="text/javascript">
+$(function () {
+
+    var choiceContainer = $("#choices");
+    $.each(datasets, function(key,val) {
+	console.log(datasets[key].html);
+	choiceContainer.append('<br/><input type="checkbox" name="' + key +
+	    '" checked="checked" id="' + key + '">' +
+	    '<span style="font-weight: bold; color: #fff; padding: 2px; margin: 4px; background: ' + datasets[key].color + '"><label for="' + key + '">'
+	    + key + '</label></span>');
+    });
+
+    choiceContainer.find("input").click(plotAccordingToChoices);
+	
+    function plotAccordingToChoices() {
+        var dataShow = [];
+
+        choiceContainer.find("input:checked").each(function () {
+            var key = $(this).attr("name");
+            dataShow.push(datasets[key]);
+        });
+
+	if (dataShow.length > 0) {
+            $.plot($("#timeseries"), dataShow, {
+                yaxis: { min: 0 },
+                xaxis: { mode: "time" },
+                bars: { show: true },
+	        legend: { position: "nw" } 
+            });
+	}
+    }
+	
+    plotAccordingToChoices();
+
+});
+</script>
+<div id="timeseries" style="float:left; width:80%;height:500px;"></div>
+<div style="float:left;"id="choices">Show:</div>
+
+
+
