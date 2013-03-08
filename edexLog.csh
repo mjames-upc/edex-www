@@ -57,6 +57,5 @@ rm $WORK/proc.log
 
 echo -n "};" >> $WORK/js/live.js
 
-scp $WORK/js/live.js conan:/content/staff/mjames/awips2/
 exit()
 
